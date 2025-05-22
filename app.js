@@ -1,19 +1,22 @@
 require('dotenv').config();
-require('dotenv').config({ path: './.env' });
-
-console.log('DB_USER:', process.env.DB_USER);
-
-
 const express = require('express');
 const bodyParser = require('body-parser');
-const schoolRoutes = require('./routes/schools');
+const schoolRoutes = require('./routes/schools'); //  routes file
 
 const app = express();
 app.use(bodyParser.json());
 
+// Simple test route to check if server runs
+app.get('/ping', (req, res) => {
+  res.send('pong');
+});
+
+// Use your school routes under /api
 app.use('/api', schoolRoutes);
 
+// Listen on port provided by Railway or default 3000 locally
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
